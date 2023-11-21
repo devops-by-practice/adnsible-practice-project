@@ -1,0 +1,17 @@
+---
+# tasks file for web_server
+
+- name: Update package cache
+  apt:
+    update_cache: yes
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Start Nginx Service
+  service:
+    name: nginx
+    state: started
+    enabled: yes
