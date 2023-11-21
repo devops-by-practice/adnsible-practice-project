@@ -1,0 +1,46 @@
+---
+- name: Install and restart Nginx on web servers
+  hosts: web
+  become: yes  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx is started and enabled
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+
+- name: Install and restart Mysql on DB server
+  hosts: db
+  become: yes  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Ensure MySQL is started and enabled
+      systemd:
+        name: mysql
+        state: started
+        enabled: yes
+
